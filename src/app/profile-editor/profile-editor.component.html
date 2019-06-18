@@ -1,7 +1,7 @@
 <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
   <label>
     First Name:
-    <input type="text" formControlName="firstName">
+    <input type="text" formControlName="firstName" required>
   </label>
   <br>
   <label>
@@ -30,6 +30,20 @@
       <input type="text" formControlName="zip">
     </label>
   </div>
-  <button type="submit">提交</button>
+  <div formArrayName="aliases">
+    <h3>Aliases</h3> <button (click)="addAlias()">新增綽號</button>
+    <div *ngFor="let item of aliases.controls; let i=index">
+      <label>
+        綽號:
+        <input type="text" [formControlName]="i">
+      </label>
+    </div>
+  </div>
+  <button type="submit" [disabled]="!profileForm.valid">提交</button>
   <button type="button" (click)="updateProfile()">更新</button>
 </form>
+
+<p>
+  Form Value: {{ profileForm.valid }} <br>
+  Form Status: {{ profileForm.status }}
+</p>
